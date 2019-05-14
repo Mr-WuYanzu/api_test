@@ -5,19 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-
-class CheckCenter
+class BeforeMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
     public function handle($request, Closure $next)
     {
-
+        // 执行动作
         $token=$_GET['token']??'';
         $id=$_GET['uid']??'';
         if(empty($token) || empty($id)){
