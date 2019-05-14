@@ -20,5 +20,6 @@ $router->get('/info', function () use ($router) {
 });
 $router->post('/index','IndexController@index');
 $router->post('/reg','IndexController@reg');
+$router->post('/register','IndexController@register');
 $router->post('/login','IndexController@login');
 $router->post('/test','IndexController@test');

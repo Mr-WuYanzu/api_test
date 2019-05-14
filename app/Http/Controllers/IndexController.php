@@ -69,7 +69,6 @@ class IndexController extends Controller
                 return json_encode($response,JSON_UNESCAPED_UNICODE);die;
             }else{
                 $data=DB::table('user')->insert($data);
-                dd($data);
                 if($data){
                     $response=[
                         'errno'=>'0',
@@ -93,6 +92,51 @@ class IndexController extends Controller
             ];
             return json_encode($response,JSON_UNESCAPED_UNICODE);die;
         }
+    }
+    //new用户注册
+    public function register(Request $request){
+        $user_name=$request->user_name??'';
+        $email=$request->email??'';
+        $password=$request->password??'';
+        if(empty($user_name)||empty($email)||empty($password)){
+            $response=[
+                'errno'=>'42001',
+                'msg'=>'缺少参数'
+            ];
+            return json_encode($response,JSON_UNESCAPED_UNICODE);die;
+        }
+        $data=[
+            'user_name'=>$user_name,
+            'email'=>$email,
+            'password'=>$password
+        ];
+
+            $data['password']=encrypt($data['password']);
+            $res=DB::table('user')->where('email',$data['email'])->first();
+            if($res){
+                $response=[
+                    'errno'=>'41001',
+                    'msg'=>'邮箱 已经注册',
+                ];
+                return json_encode($response,JSON_UNESCAPED_UNICODE);die;
+            }else{
+                $data=DB::table('user')->insert($data);
+                if($data){
+                    $response=[
+                        'errno'=>'0',
+                        'msg'=>'注册成功',
+                    ];
+                    return json_encode($response,JSON_UNESCAPED_UNICODE);
+                    die;
+                }else{
+                    $response=[
+                        'errno'=>'40010',
+                        'msg'=>'注册失败',
+                    ];
+                    return json_encode($response,JSON_UNESCAPED_UNICODE);die;
+                }
+            }
+            
     }
     //用户登录
     public function login(){
