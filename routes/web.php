@@ -28,3 +28,5 @@ $router->post('/login','IndexController@login');
 $router->post('/logindo','IndexController@logindo');
 //测试
 $router->post('/test','IndexController@test');
+//个人中心
+$router->get('/user_center','IndexController@center')->middleware('center');

@@ -213,4 +213,8 @@ class IndexController extends Controller
         $info='哈哈';
         echo "$('#text').val('".$info."')";
     }
+    //个人中心
+    public function center(){
+
+    }
 }

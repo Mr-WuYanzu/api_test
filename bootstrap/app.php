@@ -59,9 +59,11 @@ $app->singleton(
      \App\Http\Middleware\CrossHttp::class,
  ]);
 
-// $app->routeMiddleware([
+ $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+        'center'=>\App\Http\Middleware\CheckCenter::class,
+ ]);
+
 
 /*
 |--------------------------------------------------------------------------
