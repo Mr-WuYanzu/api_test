@@ -164,9 +164,9 @@ class IndexController extends Controller
     }
     //new登录
     public function logindo(Request $request){
-        $user_name=$request->user_name??'';
+        $email=$request->email??'';
         $password=$request->password??'';
-        if(empty($user_name)||empty($password)){
+        if(empty($email)||empty($password)){
             $response=[
                 'errno'=>'42001',
                 'msg'=>'缺少参数'
@@ -174,10 +174,10 @@ class IndexController extends Controller
             return json_encode($response,JSON_UNESCAPED_UNICODE);die;
         }
         $data=[
-            'user_name'=>$user_name,
+            'email'=>$email,
             'password'=>$password
         ];
-            $res=DB::table('user')->where('user_name',$data['user_name'])->first();
+            $res=DB::table('user')->where('email',$data['email'])->first();
             if($res){
                 if(decrypt($res->password)!=$data['password']){
                     $response=[
