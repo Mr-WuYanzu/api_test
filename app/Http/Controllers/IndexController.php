@@ -69,6 +69,7 @@ class IndexController extends Controller
                 return json_encode($response,JSON_UNESCAPED_UNICODE);die;
             }else{
                 $data=DB::table('user')->insert($data);
+                dd($data);
                 if($data){
                     $response=[
                         'errno'=>'0',
