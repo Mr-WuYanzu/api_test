@@ -186,12 +186,16 @@ class IndexController extends Controller
                     ];
                     return json_encode($response,JSON_UNESCAPED_UNICODE);die;
                 }else{
+                    $token=substr(md5($res->id.time()),5,15);
+                    $key='user:id:'.$res->id;
                     $response=[
                         'errno'=>'0',
                         'msg'=>'登录成功',
                         'uid'=>$res->id,
                         'token'=>substr(md5($res->id.time()),5,15)
                     ];
+                    Redis::set($key,$token);
+                    Redis::expire($key,60*60*24);
                     return json_encode($response,JSON_UNESCAPED_UNICODE);die;
                 }
             }else{
