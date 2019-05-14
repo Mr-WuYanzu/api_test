@@ -163,7 +163,7 @@ class IndexController extends Controller
 
     }
     //new登录
-    public function logindo(){
+    public function logindo(Request $request){
         $user_name=$request->user_name??'';
         $password=$request->password??'';
         if(empty($user_name)||empty($password)){
