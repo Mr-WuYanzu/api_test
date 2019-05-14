@@ -188,7 +188,9 @@ class IndexController extends Controller
                 }else{
                     $response=[
                         'errno'=>'0',
-                        'msg'=>'登录成功'
+                        'msg'=>'登录成功',
+                        'uid'=>$res->id,
+                        'token'=>substr(md5($res->id.time()),5,15)
                     ];
                     return json_encode($response,JSON_UNESCAPED_UNICODE);die;
                 }
