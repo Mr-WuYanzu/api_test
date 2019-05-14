@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-header("Access-Control-Allow-Origin", "http://client.1809a.com/login");
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
