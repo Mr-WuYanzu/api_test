@@ -61,7 +61,7 @@ $app->singleton(
 
  $app->routeMiddleware([
 //     'auth' => App\Http\Middleware\Authenticate::class,
-        'center'=>\App\Http\Middleware\CheckCenter::class,
+        'center'=>\App\Http\Middleware\CheckCentser::class,
  ]);
 
 

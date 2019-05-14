@@ -3,14 +3,18 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Redis;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-class CheckCenter
+class ExampleMiddleware
 {
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
     public function handle($request, Closure $next)
     {
-        // 执行动作
         $token=$_GET['token']??'';
         $id=$_GET['uid']??'';
         if(empty($token) || empty($id)){
@@ -19,6 +23,7 @@ class CheckCenter
                 'msg'=>'请登录'
             ];
             echo (json_encode($response,JSON_UNESCAPED_UNICODE));
+            header('Refresh:3,url=http://passport.api.com/user/login');
             die;
         }
         $key='user:id:'.$id;
@@ -39,7 +44,7 @@ class CheckCenter
         }else{
             $response=[
                 'errno'=>'20002',
-                'msg'=>'请登录正确的账户'
+                'msg'=>'token错误'
             ];
             die(json_encode($response,JSON_UNESCAPED_UNICODE));
         }
