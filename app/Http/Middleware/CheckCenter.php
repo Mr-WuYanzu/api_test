@@ -18,18 +18,17 @@ class CheckCenter
     public function handle($request, Closure $next)
     {
 
-        $token=$_COOKIE['token']??'';
-        $id=$_COOKIE['uid']??'';
+        $token=$_GET['token']??'';
+        $id=$_GET['uid']??'';
         if(empty($token) || empty($id)){
             $response=[
                 'errno'=>'20001',
                 'msg'=>'请登录'
             ];
             echo (json_encode($response,JSON_UNESCAPED_UNICODE));
-            header('Refresh:3,url=http://passport.api.com/user/login');
             die;
         }
-        $key='user:token'.$id;
+        $key='user:id:'.$id;
         $local_token=Redis::get($key);
         if($local_token){
             if($token==$local_token){

@@ -25,7 +25,7 @@ class CrossHttp
                 return response()->json('ok', 200, [
                     # 下面参数视request中header而定
                     'Access-Control-Allow-Origin' => $Origin,
-                    'Access-Control-Allow-Headers' => 'x-token',
+                    'Access-Control-Allow-Headers' => 'x-requested-with',
                     'Access-Control-Allow-Methods' => 'GET,POST,OPTIONS']);
             } else {
                 return response()->json('fail', 405);

@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+//header('Access-Control-Allow-Origin: *');
+//header('Access-Control-Allow-Methods:GET,POST,OPTION');
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -215,6 +217,12 @@ class IndexController extends Controller
     }
     //个人中心
     public function center(){
-
+        $uid=$_GET['uid'];
+        $data=DB::table('apitest')->where('id',$uid)->first();
+        $response=[
+            'errno'=>'0',
+            'data'=>$data
+        ];
+        return json_encode($response,JSON_UNESCAPED_UNICODE);
     }
 }
