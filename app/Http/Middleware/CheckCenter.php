@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Redis;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
 class CheckCenter
 {
     public function handle($request, Closure $next)
