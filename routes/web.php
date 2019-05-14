@@ -18,8 +18,13 @@ $router->get('/', function () use ($router) {
 $router->get('/info', function () use ($router) {
     phpinfo();
 });
+
 $router->post('/index','IndexController@index');
+//注册
 $router->post('/reg','IndexController@reg');
 $router->post('/register','IndexController@register');
+//登录
 $router->post('/login','IndexController@login');
+$router->post('/logindo','IndexController@logindo');
+//测试
 $router->post('/test','IndexController@test');
