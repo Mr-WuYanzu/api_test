@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Redis;
+use \Illuminate\Http\Request;
 class CheckCenter
 {
     /**
@@ -23,7 +24,6 @@ class CheckCenter
                 'msg'=>'请登录'
             ];
             echo (json_encode($response,JSON_UNESCAPED_UNICODE));
-            header('Refresh:3,url=http://passport.api.com/user/login');
             die;
         }
         $key='user:id:'.$id;
@@ -44,7 +44,7 @@ class CheckCenter
         }else{
             $response=[
                 'errno'=>'20002',
-                'msg'=>'token错误'
+                'msg'=>'缺少token参数'
             ];
             die(json_encode($response,JSON_UNESCAPED_UNICODE));
         }
