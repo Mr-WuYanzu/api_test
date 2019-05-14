@@ -136,7 +136,7 @@ class IndexController extends Controller
                     return json_encode($response,JSON_UNESCAPED_UNICODE);die;
                 }
             }
-            
+
     }
     //用户登录
     public function login(){
