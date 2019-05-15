@@ -10,8 +10,6 @@ class IndexController extends Controller
 {
 
     public function index(Request $request){
-//        $iv='d89fb057f6d4f03g';
-//        $key='zhb';
         $sign=$_GET['sign']??'';
         if(empty($sign)){
             echo "参数不完整";
@@ -92,51 +90,6 @@ class IndexController extends Controller
             return json_encode($response,JSON_UNESCAPED_UNICODE);die;
         }
     }
-    //new用户注册
-    public function register(Request $request){
-        $user_name=$request->user_name??'';
-        $email=$request->email??'';
-        $password=$request->password??'';
-        if(empty($user_name)||empty($email)||empty($password)){
-            $response=[
-                'errno'=>'42001',
-                'msg'=>'缺少参数'
-            ];
-            return json_encode($response,JSON_UNESCAPED_UNICODE);die;
-        }
-        $data=[
-            'user_name'=>$user_name,
-            'email'=>$email,
-            'password'=>$password
-        ];
-
-            $data['password']=encrypt($data['password']);
-            $res=DB::table('user')->where('email',$data['email'])->first();
-            if($res){
-                $response=[
-                    'errno'=>'41001',
-                    'msg'=>'邮箱 已经注册',
-                ];
-                return json_encode($response,JSON_UNESCAPED_UNICODE);die;
-            }else{
-                $data=DB::table('user')->insertGetId($data);
-                if($data){
-                    $response=[
-                        'errno'=>'0',
-                        'msg'=>'注册成功',
-                    ];
-                    return json_encode($response,JSON_UNESCAPED_UNICODE);
-                    die;
-                }else{
-                    $response=[
-                        'errno'=>'40010',
-                        'msg'=>'注册失败',
-                    ];
-                    return json_encode($response,JSON_UNESCAPED_UNICODE);die;
-                }
-            }
-
-    }
     //用户登录
     public function login(){
         $data=file_get_contents('php://input');
@@ -162,6 +115,43 @@ class IndexController extends Controller
 
 
     }
+    //new用户注册
+    public function register(Request $request){
+        $user_name=$request->user_name??'';
+        $email=$request->email??'';
+        $password=$request->password??'';
+        if(empty($user_name)||empty($email)||empty($password)){
+            $response=[
+                'errno'=>'42001',
+                'msg'=>'缺少参数'
+            ];
+            return json_encode($response,JSON_UNESCAPED_UNICODE);die;
+        }
+        $arr=[
+            'user_name'=>$user_name,
+            'email'=>$email,
+            'password'=>$password
+        ];
+        $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $url='http://passport.1809a.com/user/reg';
+        $ch=curl_init();
+        //初始化路径
+        curl_setopt($ch,CURLOPT_URL,$url);
+        // 将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        //使用post方式请求
+        curl_setopt($ch,CURLOPT_POST,1);
+        //请求携带的参数
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$str);
+        //将请求数据格式定义成字符串
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        //获取信息
+        $response=curl_exec($ch);
+        return $response;
+        curl_close($ch);
+
+    }
+
     //new登录
     public function logindo(Request $request){
         $email=$request->email??'';
@@ -173,46 +163,27 @@ class IndexController extends Controller
             ];
             return json_encode($response,JSON_UNESCAPED_UNICODE);die;
         }
-        $data=[
+        $arr=[
             'email'=>$email,
             'password'=>$password
         ];
-
-            $res=DB::table('user')->where('email',$data['email'])->first();
-            if($res){
-                if(decrypt($res->password)!=$data['password']){
-                    $response=[
-                        'errno'=>'42002',
-                        'msg'=>'密码错误'
-                    ];
-                    return json_encode($response,JSON_UNESCAPED_UNICODE);die;
-                }else{
-                    $token=substr(md5($res->id.time()),5,15);
-                    $key='user:id:'.$res->id;
-                    $response=[
-                        'errno'=>'0',
-                        'msg'=>'登录成功',
-                        'uid'=>$res->id,
-                        'token'=>$token
-                    ];
-                    Redis::set($key,$token);
-                    Redis::expire($key,60*60*24);
-                    return json_encode($response,JSON_UNESCAPED_UNICODE);die;
-                }
-            }else{
-                $response=[
-                    'errno'=>'42001',
-                    'msg'=>'账号不存在'
-                ];
-                return json_encode($response,JSON_UNESCAPED_UNICODE);die;
-            }
-
-
-    }
-    public function test(){
-
-        $info='哈哈';
-        echo "$('#text').val('".$info."')";
+        $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
+        $url='http://passport.1809a.com/user/login';
+        $ch=curl_init();
+        //初始化路径
+        curl_setopt($ch,CURLOPT_URL,$url);
+        // 将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        //使用post方式请求
+        curl_setopt($ch,CURLOPT_POST,1);
+        //请求携带的参数
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$str);
+        //将请求数据格式定义成字符串
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        //获取信息
+        $response=curl_exec($ch);
+        return $response;
+        curl_close($ch);
     }
     //个人中心
     public function center(){
