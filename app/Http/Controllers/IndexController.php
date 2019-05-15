@@ -209,7 +209,7 @@ class IndexController extends Controller
 
     }
     public function test(){
-        header('Access-Control-Allow-Origin:http://client.1809a.com/login');
+        
         $info='哈哈';
         echo "$('#text').val('".$info."')";
     }
