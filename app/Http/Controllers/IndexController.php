@@ -133,7 +133,7 @@ class IndexController extends Controller
             'password'=>$password
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
-        $url='http://passport.1809a.com/user/reg';
+        $url='http://passport.zhbcto.com/user/reg';
         $ch=curl_init();
         //初始化路径
         curl_setopt($ch,CURLOPT_URL,$url);
@@ -168,7 +168,7 @@ class IndexController extends Controller
             'password'=>$password
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
-        $url='http://passport.1809a.com/user/login';
+        $url='http://passport.zhbcto.com/user/login';
         $ch=curl_init();
         //初始化路径
         curl_setopt($ch,CURLOPT_URL,$url);
