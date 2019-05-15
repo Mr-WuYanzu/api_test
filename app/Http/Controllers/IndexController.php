@@ -177,6 +177,7 @@ class IndexController extends Controller
             'email'=>$email,
             'password'=>$password
         ];
+
             $res=DB::table('user')->where('email',$data['email'])->first();
             if($res){
                 if(decrypt($res->password)!=$data['password']){
