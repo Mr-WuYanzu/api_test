@@ -193,7 +193,7 @@ class IndexController extends Controller
                         'errno'=>'0',
                         'msg'=>'登录成功',
                         'uid'=>$res->id,
-                        'token'=>substr(md5($res->id.time()),5,15)
+                        'token'=>$token
                     ];
                     Redis::set($key,$token);
                     Redis::expire($key,60*60*24);
