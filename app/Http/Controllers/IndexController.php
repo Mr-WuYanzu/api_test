@@ -209,7 +209,7 @@ class IndexController extends Controller
 
     }
     public function test(){
-        
+
         $info='哈哈';
         echo "$('#text').val('".$info."')";
     }
