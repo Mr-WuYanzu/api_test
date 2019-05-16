@@ -160,18 +160,16 @@ class IndexController extends Controller
     }
     //个人中心
     public function center(){
+
         $uid=$_GET['uid']??'';
         if($uid) {
-            $data = DB::table('user')->where('id', $uid)->first();
-            $response = [
-                'errno' => '0',
-                'data' => $data
-            ];
-            return json_encode($response,JSON_UNESCAPED_UNICODE);
+            $url='http://passport.zhbcto.com?uid='.$uid;
+            $response=$this->curlget($url);
+            return $response;
         }else {
             $response = [
-                'errno' => '40015',
-                'msg' => '无数据'
+                'errno' => '20001',
+                'msg' => '请登录'
             ];
             return json_encode($response,JSON_UNESCAPED_UNICODE);
         }
@@ -189,6 +187,33 @@ class IndexController extends Controller
         curl_setopt($ch,CURLOPT_POSTFIELDS,$str);
         //将请求数据格式定义成字符串
         curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        $errno=curl_errno($ch);
+        if($errno){
+            $response=[
+                'errno'=>$errno,
+                'msg'=>'请求出错'
+            ];
+            return json_encode($response,JSON_UNESCAPED_UNICODE);die;
+        }
+        //获取信息
+        $response=curl_exec($ch);
+        return $response;
+        curl_close($ch);
+    }
+    //curl get
+    public function curlget($url){
+        $ch=curl_init();
+        //初始化路径
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        $errno=curl_errno($ch);
+        if($errno){
+            $response=[
+                'errno'=>$errno,
+                'msg'=>'请求出错'
+            ];
+            return json_encode($response,JSON_UNESCAPED_UNICODE);die;
+        }
         //获取信息
         $response=curl_exec($ch);
         return $response;
