@@ -134,22 +134,8 @@ class IndexController extends Controller
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
         $url='http://passport.zhbcto.com/user/reg';
-        $ch=curl_init();
-        //初始化路径
-        curl_setopt($ch,CURLOPT_URL,$url);
-        // 将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        //使用post方式请求
-        curl_setopt($ch,CURLOPT_POST,1);
-        //请求携带的参数
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$str);
-        //将请求数据格式定义成字符串
-        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
-        //获取信息
-        $response=curl_exec($ch);
+        $response=$this->curlpost($str,$url);
         return $response;
-        curl_close($ch);
-
     }
 
     //new登录
@@ -169,21 +155,8 @@ class IndexController extends Controller
         ];
         $str=json_encode($arr,JSON_UNESCAPED_UNICODE);
         $url='http://passport.zhbcto.com/user/login';
-        $ch=curl_init();
-        //初始化路径
-        curl_setopt($ch,CURLOPT_URL,$url);
-        // 将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-        //使用post方式请求
-        curl_setopt($ch,CURLOPT_POST,1);
-        //请求携带的参数
-        curl_setopt($ch,CURLOPT_POSTFIELDS,$str);
-        //将请求数据格式定义成字符串
-        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
-        //获取信息
-        $response=curl_exec($ch);
+        $response=$this->curlpost($str,$url);
         return $response;
-        curl_close($ch);
     }
     //个人中心
     public function center(){
@@ -202,5 +175,23 @@ class IndexController extends Controller
             ];
             return json_encode($response,JSON_UNESCAPED_UNICODE);
         }
+    }
+    //curl post
+    public function curlpost($str,$url){
+        $ch=curl_init();
+        //初始化路径
+        curl_setopt($ch,CURLOPT_URL,$url);
+        // 将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
+        //使用post方式请求
+        curl_setopt($ch,CURLOPT_POST,1);
+        //请求携带的参数
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$str);
+        //将请求数据格式定义成字符串
+        curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
+        //获取信息
+        $response=curl_exec($ch);
+        return $response;
+        curl_close($ch);
     }
 }
