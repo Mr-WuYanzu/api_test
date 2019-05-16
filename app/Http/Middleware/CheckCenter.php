@@ -43,7 +43,7 @@ class CheckCenter
         }else{
             $response=[
                 'errno'=>'20002',
-                'msg'=>'缺少token参数'
+                'msg'=>'用户未登录'
             ];
             die(json_encode($response,JSON_UNESCAPED_UNICODE));
         }
