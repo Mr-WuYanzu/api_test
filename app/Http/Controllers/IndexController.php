@@ -187,7 +187,7 @@ class IndexController extends Controller
     }
     //个人中心
     public function center(){
-        $uid=$_GET['uid'];
+        $uid=$_GET['uid']??'';
         $data=DB::table('user')->where('id',$uid)->first();
         $response=[
             'errno'=>'0',
