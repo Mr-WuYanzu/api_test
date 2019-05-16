@@ -188,11 +188,19 @@ class IndexController extends Controller
     //个人中心
     public function center(){
         $uid=$_GET['uid']??'';
-        $data=DB::table('user')->where('id',$uid)->first();
-        $response=[
-            'errno'=>'0',
-            'data'=>$data
-        ];
-        return json_encode($response,JSON_UNESCAPED_UNICODE);
+        if($uid) {
+            $data = DB::table('user')->where('id', $uid)->first();
+            $response = [
+                'errno' => '0',
+                'data' => $data
+            ];
+            return json_encode($response,JSON_UNESCAPED_UNICODE);
+        }else {
+            $response = [
+                'errno' => '40015',
+                'msg' => '无数据'
+            ];
+            return json_encode($response,JSON_UNESCAPED_UNICODE);
+        }
     }
 }
