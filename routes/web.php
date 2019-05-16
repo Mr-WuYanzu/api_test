@@ -27,4 +27,6 @@ $router->post('/register','IndexController@register');
 $router->post('/login','IndexController@login');
 $router->post('/logindo','IndexController@logindo');
 //个人中心
-$router->get('/user_center',['middleware'=>'center'],'IndexController@center');
+$router->group(['middleware' => 'center'], function () use ($router) {
+    $router->get('/user_center',['uses'=>'IndexController@center']);
+});
