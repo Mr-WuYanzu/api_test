@@ -163,7 +163,7 @@ class IndexController extends Controller
 
         $uid=$_GET['uid']??'';
         if($uid) {
-            $url='http://passport.zhbcto.com?uid='.$uid;
+            $url='http://passport.zhbcto.com/user/center?uid='.$uid;
             $response=$this->curlget($url);
             return $response;
         }else {
