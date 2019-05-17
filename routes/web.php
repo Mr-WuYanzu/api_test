@@ -43,8 +43,8 @@ $router->post('/order','OrderController@order');
 //订单列表
 $router->get('/orderlist','OrderController@orderlist');
 //支付页面
-$router->get('/ali_pay','PayController@ali_pay');
+$router->get('/ali_pay','PayController@pay');
 //支付异步回调
-$router->get('/notify_url','PayController@notify_url');
+$router->get('/notify_url','PayController@notify');
 //支付同步回调
-$router->get('/return_url','PayController@return_url');
+$router->get('/return_url','PayController@aliReturn');
