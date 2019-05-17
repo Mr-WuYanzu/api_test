@@ -219,4 +219,8 @@ class IndexController extends Controller
         return $response;
         curl_close($ch);
     }
+    //商品列表
+    public function goods(){
+
+    }
 }
