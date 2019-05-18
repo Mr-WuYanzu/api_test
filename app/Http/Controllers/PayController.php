@@ -148,7 +148,8 @@ class PayController extends Controller
         $p = json_encode($_POST);
         $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
         file_put_contents('logs/alipay_notify.log',$log_str,FILE_APPEND);
-
+        $out_trade_no=$p->out_trade_no;
+        Order::where('order_no',$out_trade_no)->update(['pay_time'=>time(),'pay_status'=>1]);
         echo 'success';
         //TODO 验签 更新订单状态
     }
