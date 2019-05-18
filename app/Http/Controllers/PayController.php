@@ -145,12 +145,10 @@ class PayController extends Controller
     public function notify()
     {
 
-        $p = json_encode($_POST);
+        $p = $_POST;
        echo '<pre>'; print_r($p);echo '</pre>';echo '<br>';
-
-        dd($p->gmt_create);
-//        $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
-//        file_put_contents('logs/alipay_notify.log8',$log_str,FILE_APPEND);
+        $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
+        file_put_contents('logs/alipay_notify.log8',$log_str,FILE_APPEND);
 
         echo 'success';
         //TODO 验签 更新订单状态
