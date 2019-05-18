@@ -146,7 +146,6 @@ class PayController extends Controller
     {
 
         $p = $_POST;
-       echo '<pre>'; print_r($p);echo '</pre>';echo '<br>';
         $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
         file_put_contents('logs/alipay_notify.log8',$log_str,FILE_APPEND);
 
