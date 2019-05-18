@@ -39,7 +39,7 @@ class PayController extends Controller
     {
         $oid=$request->input('oid');
         //验证订单状态 是否已支付 是否是有效订单
-        $order_info = Order::where(['oid'=>$oid,'is_del'=>0,'pay_status'=>0])->first()->toArray();
+        $order_info = Order::where(['oid'=>$oid,'is_del'=>0,'pay_status'=>0])->first();
         if(!$order_info){
             $response=[
                 'errno'=>50055,
@@ -49,8 +49,8 @@ class PayController extends Controller
         //业务参数
         $bizcont = [
             'subject'           => 'Lening-Order: ' .$oid,
-            'out_trade_no'      => $oid,
-            'total_amount'      => $order_info['order_amount'] / 100,
+            'out_trade_no'      => $order_info->order_no,
+            'total_amount'      => $order_info->order_amount / 100,
             'product_code'      => 'QUICK_WAP_WAY',
         ];
         //公共参数
@@ -75,7 +75,11 @@ class PayController extends Controller
         }
         $url = rtrim($param_str,'&');
         $url = $this->gate_way . $url;
-        header("Location:".$url);       // 重定向到支付宝支付页面
+        $response=[
+            'errno'=>'0',
+            'url'=>$url
+        ];
+        return json_encode($response,JSON_UNESCAPED_UNICODE);//返回 重定向到支付宝支付页面 的链接
     }
     public function rsaSign($params) {
         return $this->sign($this->getSignContent($params));
@@ -140,9 +144,14 @@ class PayController extends Controller
      */
     public function notify()
     {
+
         $p = json_encode($_POST);
-        $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
-        file_put_contents('logs/alipay_notify.log',$log_str,FILE_APPEND);
+       echo '<pre>'; print_r($p);echo '</pre>';echo '<br>';
+
+        dd($p->gmt_create);
+//        $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
+//        file_put_contents('logs/alipay_notify.log8',$log_str,FILE_APPEND);
+
         echo 'success';
         //TODO 验签 更新订单状态
     }
