@@ -23,8 +23,7 @@ class PayController extends Controller
         $this->gate_way = 'https://openapi.alipaydev.com/gateway.do';
         $this->notify_url = env('ALIPAY_NOTIFY_URL');
         $this->return_url = env('ALIPAY_RETURN_URL');
-        $this->rsaPrivateKeyFilePath = storage_path('
-        app/keys/alipay/priv.key');    //应用私钥
+        $this->rsaPrivateKeyFilePath = storage_path('app/keys/alipay/priv.key');    //应用私钥
         $this->aliPubKey = storage_path('app/keys/alipay/ali_pub.key'); //支付宝公钥
     }
     public function test()
@@ -83,7 +82,7 @@ class PayController extends Controller
     protected function sign($data) {
         $priKey = file_get_contents($this->rsaPrivateKeyFilePath);
         $res = openssl_get_privatekey($priKey);
-        dd($priKey);
+//        dd($priKey);
         ($res) or die('您使用的私钥格式错误，请检查RSA私钥配置');
         openssl_sign($data, $sign, $res, OPENSSL_ALGO_SHA256);
         if(!$this->checkEmpty($this->rsaPrivateKeyFilePath)){
