@@ -36,7 +36,8 @@ class PayController extends Controller
      * @param $oid
      */
     public function pay(Request $request)
-    {   $oid=$request->input('oid');
+    {
+        $oid=$request->input('oid');
         //验证订单状态 是否已支付 是否是有效订单
         $order_info = Order::where(['oid'=>$oid,'is_del'=>0,'pay_status'=>0])->first()->toArray();
         if(!$order_info){
@@ -141,7 +142,7 @@ class PayController extends Controller
     {
         $p = json_encode($_POST);
         $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
-        file_put_contents('logs/alipay_notify',$log_str,FILE_APPEND);
+        file_put_contents('logs/alipay_notify.log',$log_str,FILE_APPEND);
         echo 'success';
         //TODO 验签 更新订单状态
     }
