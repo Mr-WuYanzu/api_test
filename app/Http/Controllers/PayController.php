@@ -38,10 +38,8 @@ class PayController extends Controller
     public function pay(Request $request)
     {
         $oid=$request->input('oid');
-        dd($oid);
         //验证订单状态 是否已支付 是否是有效订单
         $order_info = Order::where(['oid'=>$oid,'is_del'=>0,'pay_status'=>0])->first();
-        dd($order_info);
         if(!$order_info){
             $response=[
                 'errno'=>50055,
