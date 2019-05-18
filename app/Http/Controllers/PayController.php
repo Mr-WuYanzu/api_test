@@ -145,7 +145,7 @@ class PayController extends Controller
     public function notify()
     {
 
-        $p = $_POST;
+        $p = json_encode($_POST);
         $log_str = "\n>>>>>> " .date('Y-m-d H:i:s') . ' '.$p . " \n";
         file_put_contents('logs/alipay_notify.log',$log_str,FILE_APPEND);
 
